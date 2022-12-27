@@ -64,10 +64,10 @@ const _time = {
 				})
 				$('.fail-box').html(
 					`
-				<h2>游戏结束</h2>
-				<p>您本次得分为：${config.point}</p>
+				<h2>Game Over</h2>
+				<p>Skor Anda kali ini adalah : ${config.point}</p>
 				<div>${imgtext}</div>
-				<button type="button" onclick="location.reload()">返回</button>
+				<button type="button" onclick="location.reload()">Kembali</button>
 				`
 				)
 				$('.fail-box').css({
@@ -221,10 +221,10 @@ function CreateLJ(type, img) {
 					})
 					$('.fail-box').html(
 						`
-					<h2>游戏失败</h2>
-					<p>您本次得分为：${config.point}</p>
+					<h2>Game Over</h2>
+					<p>Skor Anda kali ini adalah : ${config.point}</p>
 					<div>${imgtext}</div>
-					<button type="button" onclick="location.reload()">返回</button>
+					<button type="button" onclick="location.reload()">Kembali</button>
 					`
 					)
 					$('.fail-box').css({
@@ -568,6 +568,7 @@ function init(level) { //初始化游戏
 		config.s1 = 9000
 		config.s2 = 3000
 		config.sy = 0
+		_time.total = 120
 		config.level = 1
 		config.total_point = 60
 		lj_box.height = 300
