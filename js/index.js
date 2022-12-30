@@ -2,9 +2,9 @@ const config = {
 	lj_width: 100,
 	lj_height: 100,
 	s1: 8000,
-	s2: 2000, //出现速度参数
-	point: 0, //用户得分
-	totao_wrong: 0, //失败次数
+	s2: 2000, // Parameter kecepatan penampilan
+	point: 0, // skor pengguna
+	totao_wrong: 0, // jumlah kegagalan
 	sx: 2,
 	sy: 2,
 	level: 2,
@@ -13,7 +13,7 @@ const config = {
 	box_height: 400,
 }
 
-function setXX(point, total) { //评星级
+function setXX(point, total) { // Peringkat Bintang
 	let xx = ['img/xx1.png', 'img/xx2.png']
 	if (point < total / 3) {
 		return [xx[0], xx[0], xx[0]]
@@ -73,9 +73,7 @@ const _time = {
 				$('.fail-box').css({
 					display: 'flex'
 				})
-				// alert('失败，游戏结束')
 				this.endInterval()
-				// 时间到的事件
 			}
 		}, 1000)
 	}
@@ -127,7 +125,7 @@ function CreateLJ(type, img) {
 	if (config.level == 1) {
 		this.fx = 0.1
 	}
-	// 整一个速度
+	// seluruh kecepatan
 	// console.log(this.fx)
 	this.speedX = config.sx
 	this.speedY = config.sy
@@ -161,17 +159,17 @@ function CreateLJ(type, img) {
 	this.p1 = null
 	this.flag = 0
 	this.timer = null
-	// 记录下托之前的位置
+	// mencatat posisi sebelumnya
 	this.dragX = this.startX
 	this.dragY = this.startY
 	console.log(this)
 	let that = this
-	// 来让垃圾动起来
+	// Memindahkan sampah
 	this.lineMove = function() {
-		console.log('动')
+		console.log('Move')
 		this.stopMove()
 		this.timer = setInterval(() => {
-			if (_time.total > 30 && _time.total < 35) { //这段时间多加一次，意思是这段时间突然变快，然后恢复速度
+			if (_time.total > 30 && _time.total < 35) { // Periode waktu ini ditambahkan sekali lagi, artinya periode waktu ini tiba-tiba menjadi lebih cepat, dan kemudian kecepatannya dipulihkan
 				this.mX += this.speedX
 				this.mY += this.speedY
 			}
@@ -179,7 +177,7 @@ function CreateLJ(type, img) {
 			this.mY += this.speedY
 			// 
 			if (config.level == 2) {
-				if (this.mX > 550 && this.fx <= 0.5 || this.mX < 650 && this.fx > 0.5) { //第二关状态
+				if (this.mX > 550 && this.fx <= 0.5 || this.mX < 650 && this.fx > 0.5) { 
 					this.speedX = 0
 					this.speedY = config.sx
 				}
@@ -230,7 +228,6 @@ function CreateLJ(type, img) {
 					$('.fail-box').css({
 						display: 'flex'
 					})
-					// alert('失败，游戏结束')
 				}
 			}
 			$(this.p1).css({
@@ -258,12 +255,12 @@ function CreateLJ(type, img) {
 			top: this.mY,
 			zIndex: 1000
 		})
-		// 拖动时停止定时器，未拖动时重新开始定时器
+		// Hentikan timer saat menyeret, mulai ulang timer saat tidak menyeret
 		this.lineMove()
 		$('.lj-box').append(this.p1)
 		this.p1.addEventListener('mousemove', this.drag, false)
 		this.p1.addEventListener('mouseleave', this.dragEnd, false)
-		// 用于鼠标移动过快，垃圾位置未跟上的中途脱落情况
+		// Ini digunakan untuk situasi di mana mouse bergerak terlalu cepat dan posisi sampah tidak mengikuti penurunan di tengah jalan
 		this.p1.addEventListener('mouseup', this.dragEnd, false)
 		this.p1.addEventListener('mousedown', this.dragStart, false)
 	}
@@ -287,7 +284,7 @@ function CreateLJ(type, img) {
 		}
 
 	}
-	this.dragStart = function() { //开始拖时
+	this.dragStart = function() { // ketika mulai menyeret sampahnya
 		that.flag = 1
 		that.dragX = that.mX
 		that.dragY = that.mY
@@ -297,8 +294,9 @@ function CreateLJ(type, img) {
 			zIndex: 100000
 		})
 	}
-	// 鼠标停止拖动时，1.判断当前位置是否与（同类型）垃圾桶重合，否-》回到原位（或向后移）
-	// 是=》消除该垃圾
+	// Saat mouse berhenti menyeret
+	// 1. Tentukan apakah posisi saat ini bertepatan dengan tempat sampah (jenis yang sama), jika tidak - "kembali ke posisi semula (atau mundur)
+	// True => Hilangkan sampah ini
 	this.dragEnd = function() {
 		if (that.flag == 0) { //鼠标移过
 			return
@@ -326,19 +324,16 @@ function CreateLJ(type, img) {
 		}
 		// that.mX = that.dragX
 		// that.mY = that.dragY
-		// 垃圾在轨道div内，轨道和垃圾桶同级
+		// Sampah ada di dalam track div, dan track berada pada level yang sama dengan tempat sampah
 		let mx = this.parentNode.offsetLeft + this.offsetLeft
 		let my = this.parentNode.offsetTop + this.offsetTop
-		// 垃圾桶宽度范围加到边边距离
 		// console.log(ljt1.a.offsetLeft+150,mx)
-		// 这里写死的第一个垃圾桶，实际上type为1和第一个垃圾桶判断
-		// 这里我们和四个垃圾桶都做一下判断，因为需要有丢错的情况
-		let arr = [ljt1, ljt2, ljt3, ljt4]
-		// 老老实实改成for循环吧
+		// Di sini kami membuat tiga tong sampah
+		let arr = [ljt1, ljt2, ljt3]
 		for (let i = 0; i < arr.length; i++) {
 			if (Math.abs(arr[i].a.offsetLeft - mx) < 150 && Math.abs(arr[i].a.offsetTop - my) < 170) {
 				if (arr[i].type != that.type) {
-					// 丢错了,暂时回原位，
+					// Jika user salah memilah sampah, kembalikan object ke awal
 					$(arr[i].a).css({
 						backgroundColor: 'red'
 					})
@@ -370,9 +365,9 @@ function CreateLJ(type, img) {
 					that.lineMove()
 					break;
 				} else {
-					// 丢对了，加分
+					// Jika User benar memilah sampahnya, tambahkan pointnya
 					$(arr[i].a).css({
-						backgroundColor: 'yellow'
+						backgroundColor: '#eee'
 					})
 					setTimeout(() => {
 						$(arr[i].a).css({
@@ -387,7 +382,6 @@ function CreateLJ(type, img) {
 				}
 
 			} else {
-				// 这里四个判断=》被执行了四次，想个办法改善代码
 				that.lineMove()
 				$(this).css({
 
@@ -428,13 +422,8 @@ function Ljt(left, top, type) {
 	}
 }
 
-// 整一个批量创建
-
-// var lj1 = new CreateLJ(1)
-// lj1.create()
-//整个垃圾group=》
 const all_lj = [
-	// 厨余
+	// Sampah Organik
 	[
 		'./img/cy/1.png', './img/cy/2.png', './img/cy/3.png', './img/cy/4.png',
 		'./img/cy/5.png', './img/cy/6.png', './img/cy/7.png', './img/cy/8.png',
@@ -445,7 +434,7 @@ const all_lj = [
 		'./img/cy/25.png',
 
 	],
-	// 不可回收
+	// Sampah Residu
 	[
 		'./img/bkhs/1.png', './img/bkhs/2.png', './img/bkhs/3.png', './img/bkhs/4.png', './img/bkhs/5.png',
 		'./img/bkhs/6.png', './img/bkhs/7.png', './img/bkhs/8.png', './img/bkhs/9.png', './img/bkhs/10.png',
@@ -453,15 +442,7 @@ const all_lj = [
 		'./img/bkhs/16.png', './img/bkhs/17.png', './img/bkhs/18.png', './img/bkhs/19.png', './img/bkhs/20.png',
 		'./img/bkhs/21.png', './img/bkhs/22.png', './img/bkhs/23.png', './img/bkhs/24.png', './img/bkhs/25.png'
 	],
-	// 有害
-	[
-		'./img/yh/1.png', './img/yh/2.png', './img/yh/3.png', './img/yh/4.png', './img/yh/5.png',
-		'./img/yh/6.png', './img/yh/7.png', './img/yh/8.png', './img/yh/9.png', './img/yh/10.png',
-		'./img/yh/11.png', './img/yh/12.png', './img/yh/13.png', './img/yh/14.png', './img/yh/3.png',
-		'./img/yh/3.png', './img/yh/3.png', './img/yh/3.png', './img/yh/3.png', './img/yh/3.png',
-		'./img/yh/3.png', './img/yh/3.png', './img/yh/3.png', './img/yh/3.png', './img/yh/3.png'
-	],
-	// 可回收
+	// Sampah AnOrganik
 	[
 		'./img/khs/1.png', './img/khs/2.png', './img/khs/3.png', './img/khs/4.png', './img/khs/5.png',
 		'./img/khs/6.png', './img/khs/7.png', './img/khs/8.png', './img/khs/9.png', './img/khs/10.png',
@@ -508,7 +489,7 @@ function doCreate(level) {
 	})
 }
 
-function stopGame() { //暂停游戏
+function stopGame() { // jeda permainan
 	lj_obj.forEach(item => {
 		item.stopMove()
 	})
@@ -521,7 +502,7 @@ function stopGame() { //暂停游戏
 	$('.stop-btn').html('<span onclick="reStart()"><img src="./img/start.png"/></span>')
 }
 
-function reStart() { //继续游戏
+function reStart() { // Lanjutkan permainan
 	lj_obj.forEach(item => {
 		item.lineMove()
 	})
@@ -537,12 +518,12 @@ function reStart() { //继续游戏
 
 	$('.stop-btn').html('<span onclick="stopGame()"><img src="./img/stop.png"/></span>')
 }
-let ljt1, ljt2, ljt3, ljt4
+let ljt1, ljt2, ljt3
 let bgm = document.getElementById('bgm')
 let bgm_flag = 0
 
 function bgmSound() {
-	if (bgm_flag == 1) { //1为播放中，为播放中则暂停
+	if (bgm_flag == 1) { // Untuk mematikan/menghidupkan BGM
 		bgm.pause()
 		bgm_flag = 0
 	} else {
@@ -551,37 +532,33 @@ function bgmSound() {
 	}
 }
 
-function init(level) { //初始化游戏
+function init(level) { // Inisialisasi Permainan
 	$('.game-cont').css({
 		display: 'block'
 	})
 	if (level == 1) { //第一关
 		ljt1 = new Ljt(100, 100, 1)
 		ljt1.create()
-		ljt2 = new Ljt(400, 100, 2)
+		ljt2 = new Ljt(700, 100, 2)
 		ljt2.create()
-		ljt3 = new Ljt(700, 100, 3)
+		ljt3 = new Ljt(400, 100, 3)
 		ljt3.create()
-		ljt4 = new Ljt(1000, 100, 4)
-		ljt4.create()
 		config.sx = 2
 		config.s1 = 9000
 		config.s2 = 3000
 		config.sy = 0
-		_time.total = 120
+		_time.total = 120 // waktu game
 		config.level = 1
 		config.total_point = 60
 		lj_box.height = 300
 		lj_box.dbimg = 'url(img/db.jpg)'
 	} else if (level == 2) {
-		ljt1 = new Ljt(20, 40, 1)
+		ljt1 = new Ljt(400, 40, 1)
 		ljt1.create()
-		ljt2 = new Ljt(1000, 40, 2)
+		ljt2 = new Ljt(800, 40, 2)
 		ljt2.create()
-		ljt3 = new Ljt(20, 500, 3)
+		ljt3 = new Ljt(300, 500, 3)
 		ljt3.create()
-		ljt4 = new Ljt(1000, 500, 4)
-		ljt4.create()
 		config.sx = 2
 		config.sy = 0
 		config.s1 = 10000
@@ -597,10 +574,8 @@ function init(level) { //初始化游戏
 		ljt1.create()
 		ljt2 = new Ljt(20, 250, 2)
 		ljt2.create()
-		ljt3 = new Ljt(550, 500, 3)
+		ljt3 = new Ljt(1000, 250, 3)
 		ljt3.create()
-		ljt4 = new Ljt(1000, 250, 4)
-		ljt4.create()
 		config.sx = 1.3
 		config.sy = 0.75
 		config.s1 = 8000

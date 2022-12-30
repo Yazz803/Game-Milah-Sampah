@@ -1,3 +1,3 @@
-![](./img/jietu1.jpg)
+# Game Milah Sampah Organik, AnOrganik, dan Residu
 
-![](./img/jietu2.jpg)
+<h2>Masih dalam Pengembangan</h2>
