@@ -405,7 +405,7 @@ function Ljt(left, top, type) {
 	this.type = type
 	this.a = null
 	this.create = function() {
-		let img_list = ['./img/1.png', './img/2.png', './img/3.png', './img/4.png']
+		let img_list = ['./img/1clone1.png', './img/2clone2.png', './img/3clone3.png', './img/4.png']
 		this.a = document.createElement('div')
 		$(this.a).css({
 			left: this.left,
@@ -436,10 +436,10 @@ const all_lj = [
 	],
 	// Sampah Residu
 	[
-		'./img/bkhs/1.png', './img/bkhs/2.png', './img/bkhs/3.png', './img/bkhs/4.png', './img/bkhs/5.png',
-		'./img/bkhs/6.png', './img/bkhs/7.png', './img/bkhs/8.png', './img/bkhs/9.png', './img/bkhs/10.png',
-		'./img/bkhs/11.png', './img/bkhs/12.png', './img/bkhs/13.png', './img/bkhs/14.png', './img/bkhs/15.png',
-		'./img/bkhs/16.png', './img/bkhs/17.png', './img/bkhs/18.png', './img/bkhs/19.png', './img/bkhs/20.png',
+		'./img/bkhs/2.png', './img/bkhs/5.png', './img/bkhs/5.png', './img/bkhs/5.png',
+		'./img/bkhs/7.png', './img/bkhs/8.png', './img/bkhs/8.png',  './img/bkhs/8.png', 
+		'./img/bkhs/11.png', './img/bkhs/12.png', './img/bkhs/13.png', './img/bkhs/14.png',
+		'./img/bkhs/16.png', './img/bkhs/20.png', './img/bkhs/20.png', './img/bkhs/20.png', './img/bkhs/20.png',
 		'./img/bkhs/21.png', './img/bkhs/22.png', './img/bkhs/23.png', './img/bkhs/24.png', './img/bkhs/25.png'
 	],
 	// Sampah AnOrganik
@@ -458,11 +458,13 @@ function doCreate(level) {
 	let will_show = []
 	if (level == 1) {
 		will_show = all_lj.map((item) => {
-			return item.slice(0, 15)
+			// return item.slice(0, 15)
+			return item.slice(0)
 		})
 	} else if (level == 2) {
 		will_show = all_lj.map((item) => {
-			return item.slice(15)
+			// return item.slice(15)
+			return item.slice(0)
 		})
 	} else {
 		will_show = all_lj
@@ -536,20 +538,20 @@ function init(level) { // Inisialisasi Permainan
 	$('.game-cont').css({
 		display: 'block'
 	})
-	if (level == 1) { //第一关
+	if (level == 1) { 
 		ljt1 = new Ljt(100, 100, 1)
 		ljt1.create()
 		ljt2 = new Ljt(700, 100, 2)
 		ljt2.create()
 		ljt3 = new Ljt(400, 100, 3)
 		ljt3.create()
-		config.sx = 2
-		config.s1 = 9000
-		config.s2 = 3000
+		config.sx = 2.5 // default = 2
+		config.s1 = 5000 // sulit = 4500
+		config.s2 = 2000 // sulit = 1500
 		config.sy = 0
-		_time.total = 120 // waktu game
+		_time.total = 60 // waktu game
 		config.level = 1
-		config.total_point = 60
+		config.total_point = 45
 		lj_box.height = 300
 		lj_box.dbimg = 'url(img/db.jpg)'
 	} else if (level == 2) {
@@ -559,15 +561,15 @@ function init(level) { // Inisialisasi Permainan
 		ljt2.create()
 		ljt3 = new Ljt(300, 500, 3)
 		ljt3.create()
-		config.sx = 2
-		config.sy = 0
-		config.s1 = 10000
-		config.s2 = 2000
+		config.sx = 3 // default = 2
+		config.sy = 1 // default = 0
+		config.s1 = 4500 // sulit = 4500, default = 8000
+		config.s2 = 1000 // sulit = 1000, default = 3000
 		// s1*15+s2*4
-		_time.total = 150
+		_time.total = 90
 		config.level = 2
 		lj_box.height = 480
-		config.total_point = 75
+		config.total_point = 65
 		lj_box.dbimg = 'url(img/db2.png)'
 	} else if (level == 3) {
 		ljt1 = new Ljt(550, 20, 1)
@@ -576,14 +578,14 @@ function init(level) { // Inisialisasi Permainan
 		ljt2.create()
 		ljt3 = new Ljt(1000, 250, 3)
 		ljt3.create()
-		config.sx = 1.3
-		config.sy = 0.75
-		config.s1 = 8000
+		config.sx = 2.6 // default = 1.3
+		config.sy = 1.5 // default = 0.75
+		config.s1 = 5000
 		// s1*25+s2*4
-		config.s2 = 2000
-		_time.total = 180
+		config.s2 = 2500
+		_time.total = 120
 		config.level = 3
-		config.total_point = 100
+		config.total_point = 80
 		lj_box.height = 750
 		lj_box.dbimg = 'url(img/db3.png)'
 	}
