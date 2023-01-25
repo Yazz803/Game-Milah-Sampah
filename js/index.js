@@ -298,7 +298,7 @@ function CreateLJ(type, img) {
 	// 1. Tentukan apakah posisi saat ini bertepatan dengan tempat sampah (jenis yang sama), jika tidak - "kembali ke posisi semula (atau mundur)
 	// True => Hilangkan sampah ini
 	this.dragEnd = function() {
-		if (that.flag == 0) { //鼠标移过
+		if (that.flag == 0) {
 			return
 		}
 		$(this).css({
@@ -436,7 +436,7 @@ const all_lj = [
 	],
 	// Sampah Residu
 	[
-		'./img/bkhs/2.png', './img/bkhs/5.png', './img/bkhs/5.png', './img/bkhs/5.png',
+		'./img/bkhs/2.png', './img/bkhs/5.png', './img/bkhs/5.png', './img/bkhs/5.png', './img/bkhs/5.png', 
 		'./img/bkhs/7.png', './img/bkhs/8.png', './img/bkhs/8.png',  './img/bkhs/8.png', 
 		'./img/bkhs/11.png', './img/bkhs/12.png', './img/bkhs/13.png', './img/bkhs/14.png',
 		'./img/bkhs/16.png', './img/bkhs/20.png', './img/bkhs/20.png', './img/bkhs/20.png', './img/bkhs/20.png',
